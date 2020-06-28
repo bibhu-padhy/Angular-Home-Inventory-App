@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "sics-8461b": {
+      "hosting": {
+        "front-end": [
+          "sics-8461b"
+        ]
+      }
+    }
+  }
+}
