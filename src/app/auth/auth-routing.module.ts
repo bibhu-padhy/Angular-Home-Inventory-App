@@ -1,12 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
+import { AngularFireAuthGuard, redirectLoggedInTo } from '@angular/fire/auth-guard';
 
+
+const redirectLoggedInToItems = () => redirectLoggedInTo(['home']);
 
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
+    canActivate: [AngularFireAuthGuard],
+    data: { authGuardPipe: redirectLoggedInToItems }
   }
 ];
 

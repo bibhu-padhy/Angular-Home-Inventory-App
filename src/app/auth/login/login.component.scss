@@ -1,0 +1,22 @@
+.login_container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img,
+    .login_button {
+        width: 50%;
+    }
+    .login_button {
+        display: flex;
+        justify-content: center;
+        button {
+            cursor: pointer;
+            background-color: white;
+            border: none;
+            font-size: 20px;
+            font-family: "Times New Roman", Times, serif;
+            color: #ff6363;
+        }
+    }
+}
