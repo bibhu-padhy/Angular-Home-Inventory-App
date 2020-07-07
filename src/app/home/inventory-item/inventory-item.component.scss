@@ -1,3 +1,40 @@
 .inventory_item {
-
+  height: 50px;
+  width: 300px;
+  border: 1px solid #ff6363;
+  margin: 5px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  .fa-bars {
+    margin-left: 2px;
+    width: 10%;
+  }
+  .item_name {
+    cursor: pointer;
+    width: 80%;
+    font-size: larger;
+  }
+  .circel {
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border: 1px solid black;
+    border-radius: 50%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .inner_circel {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      &.active {
+        background-color: #77ff95;
+      }
+    }
+  }
+  &.IsComplede {
+    border: 1px solid #77ff95;
+  }
 }

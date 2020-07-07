@@ -1,26 +1,60 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../auth/services/auth.service';
-import { UserService } from '../common/services/user/user.service';
-import { Observable } from 'rxjs';
-import { UserModal } from '../common/data-modal/user.modal';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { ItemsModal } from './modal/items.modal'
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
-  userData$: Observable<UserModal>
+
+  inventoryItemsForm: FormGroup;
+  inventoryItemsArray: ItemsModal[] = [
+    {
+      ItemId: '1',
+      ItemName: 'test test',
+      ItemPrice: 40,
+      ItemQuantity: 1,
+      IsCompleted: false
+    },
+    {
+      ItemId: '2',
+      ItemName: 'test',
+      ItemPrice: 40,
+      ItemQuantity: 1,
+      IsCompleted: true
+    },
+  ];
 
   constructor(
-    public authService: AuthService,
-    public userService: UserService
-  ) { }
+    private fb: FormBuilder
+  ) {
+    this.inventoryItemsForm = this.fb.group({
+      ItemName: ['', [Validators.required]],
+      ItemPrice: ['', [Validators.required]],
+      ItemQuantity: ['', [Validators.required]],
+      CreatedAt: new Date(),
+      UpdatedAt: null,
+    })
+  }
 
-  ngOnInit(): void {
-    this.userData$ = this.userService.userData$;
-    this.userService.checkAccessToken();
+  get FC() {
+    return this.inventoryItemsForm.controls
+  }
+
+  addItem(formValue: ItemsModal) {
+    if (this.inventoryItemsForm.valid) {
+      this.inventoryItemsArray.unshift(formValue);
+    } else {
+      console.log('invalid')
+    }
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.inventoryItemsArray, event.previousIndex, event.currentIndex);
   }
 
 }
