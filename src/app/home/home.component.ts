@@ -12,7 +12,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
-
+  private UserId: string;
   inventoryItemsForm: FormGroup;
   inventoryItemsArray: Observable<ItemsModal[]> = this.inventoryService.getInventoryItems();
 
@@ -28,12 +28,15 @@ export class HomeComponent {
       ItemQuantity: ['', [Validators.required]],
       CreatedAt: new Date(),
       UpdatedAt: null,
+      IsCompleted: false,
+      UserId: ''
     })
 
-    this.inventoryService.getInventoryItems()
-      .subscribe((data) => {
-        console.log(data);
-      })
+  }
+
+  async getUserId(): Promise<string> {
+    const user = await this.authService.isLoggedIn()
+    return user.uid
   }
 
   get FC() {
@@ -48,12 +51,14 @@ export class HomeComponent {
       })
   }
 
-  addItem(formValue: ItemsModal) {
-    // if (this.inventoryItemsForm.valid) {
-    //   this.inventoryItemsArray.unshift(formValue);
-    // } else {
-    //   console.log('invalid')
-    // }
+  async addItem(formValue: ItemsModal) {
+    if (this.inventoryItemsForm.valid) {
+      formValue.UserId = await this.getUserId();
+      this.inventoryService.addItem(formValue);
+      console.log(formValue);
+    } else {
+      console.log('invalid')
+    }
   }
 
   // drop(event: CdkDragDrop<string[]>) {

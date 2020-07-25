@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'
 import { ItemsModal } from '../modal/items.modal';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -33,5 +34,10 @@ export class InventoryItemsService {
           }
         })
       )
+  }
+
+  async addItem(item: ItemsModal) {
+    const addedItem = await this.db.collection('items_list').add(item);
+    return addedItem.id;
   }
 }
