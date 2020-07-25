@@ -3,6 +3,7 @@ import { AngularFireAuth } from '@angular/fire/auth'
 import { auth } from 'firebase/app';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/common/services/user/user.service'
+import { first } from 'rxjs/operators';
 
 
 @Injectable({
@@ -16,9 +17,11 @@ export class AuthService {
     private userService: UserService
   ) { }
 
+
   async login() {
     // get the google sign in pop up
     const data = await this.auth.signInWithPopup(new auth.GoogleAuthProvider())
+    console.log(data);
     if (data.user) {
       const userInfo = {
         displayName: data.user.displayName,
@@ -26,9 +29,15 @@ export class AuthService {
         photoURL: data.user.photoURL,
         uid: data.user.uid
       }
-      await this.userService.checkUserExistOrNot(data.user.uid, userInfo);
+      console.log(data.additionalUserInfo);
+      localStorage.setItem('refresh_token', (await data.user.getIdToken(true)))
+      await this.userService.checkUserExistOrNot(data.additionalUserInfo.isNewUser, userInfo);
       this.router.navigateByUrl('/home');
     }
+  }
+
+  isLoggedIn() {
+    return this.auth.authState.pipe(first()).toPromise();
   }
 
   async logout() {

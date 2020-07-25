@@ -1,6 +1,6 @@
 <div class="inventory_item" [class.IsComplede]="InventtoryItem.IsCompleted">
-  <i cdkDragHandle class="fa fa-bars" aria-hidden="true"></i>
-  <span class="item_name">
+  <i class="fa fa-bars" aria-hidden="true"></i>
+  <span (click)="getItemDetails(InventtoryItem.ItemId)" class="item_name">
     {{InventtoryItem.ItemName | titleCasing}}
   </span>
   <div class="circel">

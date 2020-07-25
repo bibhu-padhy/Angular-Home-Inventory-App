@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { ItemsModal } from '../modal/items.modal';
 
 @Component({
@@ -9,7 +9,13 @@ import { ItemsModal } from '../modal/items.modal';
 export class InventoryItemComponent {
 
   @Input() InventtoryItem: ItemsModal
+  @Output('selectedItemId') selectedItemId = new EventEmitter();
 
   constructor() { }
+
+  getItemDetails(ItemtId) {
+    this.selectedItemId.emit({ ItemtId });
+  }
+
 
 }

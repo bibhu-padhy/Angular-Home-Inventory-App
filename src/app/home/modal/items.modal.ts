@@ -1,9 +1,11 @@
 export interface ItemsModal {
-  ItemId: string
+  ItemId?: string;
+  UserId: string;
   ItemName: string;
   ItemPrice: number;
   ItemQuantity: number;
-  CreatedAt?: Date;
-  UpdatedAt?: Date;
+  CreatedAt: Date;
+  UpdatedAt: Date;
   IsCompleted: boolean;
+  ItemRefrenceLink: string;
 }
