@@ -1,28 +1,44 @@
 import { Injectable } from '@angular/core';
 import { ItemsModal } from '../modal/items.modal';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { AuthService } from 'src/app/auth/services/auth.service';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class InventoryItemsService {
-
   private readonly item_collection_ref = this.db.collection('items_list');
+  loggedInUser: firebase.User;
 
   constructor(
-    private db: AngularFirestore
+    private db: AngularFirestore,
+    private authService: AuthService
   ) { }
 
-  getInventoryItems(): Observable<any[]> {
-    return this.db.collection('items_list', ref => ref.orderBy('CreatedAt', 'desc'))
-      .valueChanges({ idField: 'ItemId' })
+  getInventoryItems(): Observable<any> {
+    const items = this.authService.auth.authState
+      .pipe(
+        switchMap((user: firebase.User) => {
+          if (user) {
+            return this.db.collection('items_list',
+              collection_ref =>
+                collection_ref.orderBy('CreatedAt', 'desc').where('UserId', '==', user?.uid)
+            ).valueChanges();
+          } else {
+            alert('Refresh page, please try logging in 😀')
+            return null;
+          }
+        })
+      )
+    return items;
   }
 
   getItem(ItemId: string): Observable<any> {
-    return this.db.doc(`items_list/${ItemId}`).get()
+    return this.db.doc(`items_list/${ItemId}`)
+      .get()
       .pipe(
         map(i => {
           if (!i.exists) {

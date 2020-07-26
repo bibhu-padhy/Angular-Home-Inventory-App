@@ -11,14 +11,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     public authService: AuthService
-  ) {
-    this.isLoggedIn()
-  }
+  ) { }
 
   ngOnInit(): void {
-  }
-  async isLoggedIn() {
-    console.log(await this.authService.isLoggedIn());
   }
 
 }

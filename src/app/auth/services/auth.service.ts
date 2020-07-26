@@ -20,8 +20,8 @@ export class AuthService {
 
   async login() {
     // get the google sign in pop up
-    const data = await this.auth.signInWithPopup(new auth.GoogleAuthProvider())
-    console.log(data);
+    const data = await this.auth.signInWithPopup(new auth.GoogleAuthProvider());
+
     if (data.user) {
       const userInfo = {
         displayName: data.user.displayName,
@@ -29,15 +29,18 @@ export class AuthService {
         photoURL: data.user.photoURL,
         uid: data.user.uid
       }
-      console.log(data.additionalUserInfo);
-      localStorage.setItem('refresh_token', (await data.user.getIdToken(true)))
       await this.userService.checkUserExistOrNot(data.additionalUserInfo.isNewUser, userInfo);
       this.router.navigateByUrl('/home');
     }
   }
 
-  isLoggedIn() {
+  private isLoggedIn() {
     return this.auth.authState.pipe(first()).toPromise();
+  }
+
+  async getUserId(): Promise<string> {
+    const user = await this.isLoggedIn()
+    return user.uid
   }
 
   async logout() {

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { ItemsModal } from './modal/items.modal'
 import { InventoryItemsService } from './services/inventory-items.service'
 import { AuthService } from '../auth/services/auth.service';
@@ -14,7 +13,9 @@ import { Observable } from 'rxjs';
 export class HomeComponent {
   private UserId: string;
   inventoryItemsForm: FormGroup;
-  inventoryItemsArray: Observable<ItemsModal[]> = this.inventoryService.getInventoryItems();
+  loggedInUser: any;
+  inventoryItemsArray: Observable<ItemsModal[]> = this.inventoryService.getInventoryItems()
+
 
   constructor(
     private fb: FormBuilder,
@@ -31,17 +32,6 @@ export class HomeComponent {
       IsCompleted: false,
       UserId: ''
     })
-
-    this.inventoryService.getInventoryItems()
-      .subscribe((res) => {
-        console.log(res);
-      })
-
-  }
-
-  async getUserId(): Promise<string> {
-    const user = await this.authService.isLoggedIn()
-    return user.uid
   }
 
   get FC() {
@@ -56,26 +46,19 @@ export class HomeComponent {
         })
     } else { // update
       this.inventoryService.updateItem(item.ItemId, { IsCompleted: !item.isCompleted })
-      // .then((r => {
-      //   console.log(r)
-      // }))
     }
-
   }
 
   async addItem(formValue: ItemsModal) {
     if (this.inventoryItemsForm.valid) {
-      formValue.UserId = await this.getUserId();
-      this.inventoryService.addItem(formValue);
-      this.inventoryItemsArray = this.inventoryService.getInventoryItems();
-      console.log(formValue);
+      formValue.UserId = await this.authService.getUserId();
+      this.inventoryService.addItem(formValue)
+        .then((_) => {
+          this.inventoryItemsForm.reset()
+        })
     } else {
       console.log('invalid')
     }
   }
-
-  // drop(event: CdkDragDrop<string[]>) {
-  //   moveItemInArray(this.inventoryItemsArray, event.previousIndex, event.currentIndex);
-  // }
 
 }
