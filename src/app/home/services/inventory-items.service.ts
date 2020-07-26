@@ -10,17 +10,15 @@ import { Observable } from 'rxjs';
 })
 export class InventoryItemsService {
 
+  private readonly item_collection_ref = this.db.collection('items_list');
+
   constructor(
     private db: AngularFirestore
   ) { }
 
-  getInventoryItems(): Observable<ItemsModal[]> {
-    return this.db.collection('items_list').get().pipe(
-      map(i => i.docs.map(d => ({
-        ItemId: d.id,
-        ...d.data()
-      }) as ItemsModal))
-    )
+  getInventoryItems(): Observable<any[]> {
+    return this.db.collection('items_list', ref => ref.orderBy('CreatedAt', 'desc'))
+      .valueChanges({ idField: 'ItemId' })
   }
 
   getItem(ItemId: string): Observable<any> {
@@ -37,7 +35,12 @@ export class InventoryItemsService {
   }
 
   async addItem(item: ItemsModal) {
-    const addedItem = await this.db.collection('items_list').add(item);
+    const addedItem = await this.item_collection_ref.add(item);
     return addedItem.id;
+  }
+
+  updateItem(ItemId, Item: any) {
+    this.db.doc(`items_list/${ItemId}`)
+      .set(Item, { merge: true })
   }
 }

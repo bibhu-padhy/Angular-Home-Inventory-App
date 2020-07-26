@@ -32,6 +32,11 @@ export class HomeComponent {
       UserId: ''
     })
 
+    this.inventoryService.getInventoryItems()
+      .subscribe((res) => {
+        console.log(res);
+      })
+
   }
 
   async getUserId(): Promise<string> {
@@ -43,18 +48,26 @@ export class HomeComponent {
     return this.inventoryItemsForm.controls
   }
 
-  getSelectedItemId(id: { ItemtId: string }) {
-    console.log(id);
-    this.inventoryService.getItem(id.ItemtId)
-      .subscribe((res) => {
-        console.log(res);
-      })
+  getSelectedItemId(item: { ItemId: string, isShowDetails: string, isCompleted: boolean }) {
+    if (item.isShowDetails) { // show details
+      this.inventoryService.getItem(item.ItemId)
+        .subscribe((res) => {
+          console.log(res);
+        })
+    } else { // update
+      this.inventoryService.updateItem(item.ItemId, { IsCompleted: !item.isCompleted })
+      // .then((r => {
+      //   console.log(r)
+      // }))
+    }
+
   }
 
   async addItem(formValue: ItemsModal) {
     if (this.inventoryItemsForm.valid) {
       formValue.UserId = await this.getUserId();
       this.inventoryService.addItem(formValue);
+      this.inventoryItemsArray = this.inventoryService.getInventoryItems();
       console.log(formValue);
     } else {
       console.log('invalid')

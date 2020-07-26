@@ -13,9 +13,8 @@ export class InventoryItemComponent {
 
   constructor() { }
 
-  getItemDetails(ItemtId) {
-    this.selectedItemId.emit({ ItemtId });
+  getItemDetails(Item: ItemsModal, isShowDetails: boolean) {
+    this.selectedItemId.emit({ ItemId: Item.ItemId, isShowDetails, isCompleted: Item.IsCompleted });
   }
-
 
 }

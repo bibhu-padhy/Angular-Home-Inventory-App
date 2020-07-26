@@ -1,10 +1,9 @@
 <div class="inventory_item" [class.IsComplede]="InventtoryItem.IsCompleted">
   <i class="fa fa-bars" aria-hidden="true"></i>
-  <span (click)="getItemDetails(InventtoryItem.ItemId)" class="item_name">
+  <span (click)="getItemDetails(InventtoryItem,true)" class="item_name">
     {{InventtoryItem.ItemName | titleCasing}}
   </span>
-  <div class="circel">
-    <div (click)="InventtoryItem.IsCompleted= !InventtoryItem.IsCompleted" class="inner_circel"
-      [class.active]="InventtoryItem.IsCompleted"></div>
+  <div class="circel" (click)="getItemDetails(InventtoryItem,false)">
+    <div class="inner_circel" [class.active]="InventtoryItem.IsCompleted"></div>
   </div>
 </div>
