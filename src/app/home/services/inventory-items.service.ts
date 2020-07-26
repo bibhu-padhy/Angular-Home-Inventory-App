@@ -4,6 +4,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { map, switchMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
+import { database } from 'firebase';
 
 
 @Injectable({
@@ -26,7 +27,7 @@ export class InventoryItemsService {
             return this.db.collection('items_list',
               collection_ref =>
                 collection_ref.orderBy('CreatedAt', 'desc').where('UserId', '==', user?.uid)
-            ).valueChanges();
+            ).valueChanges({ idField: 'ItemId' })
           } else {
             alert('Refresh page, please try logging in 😀')
             return null;
@@ -56,7 +57,12 @@ export class InventoryItemsService {
   }
 
   updateItem(ItemId, Item: any) {
-    this.db.doc(`items_list/${ItemId}`)
-      .set(Item, { merge: true })
+    if (ItemId && Item) {
+      this.db.doc(`items_list/${ItemId}`)
+        .set(Item, { merge: true })
+    } else {
+      alert('some thing went wrong please reload');
+    }
+
   }
 }
