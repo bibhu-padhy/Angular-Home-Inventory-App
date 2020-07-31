@@ -18,32 +18,10 @@
       align-items: center;
 
       .add_items_container {
+        width: 300px;
         display: flex;
+        justify-content: space-between;
         align-items: center;
-
-        input {
-          height: 30px;
-          // width: 200px;
-          border-radius: 0;
-          border: 1px solid #e6e6e6;
-        }
-
-        button {
-          background-color: white;
-          border: none;
-        }
-
-        .price_input,
-        .quantity_input {
-          width: 100px;
-          border-left: none;
-        }
-
-        .fa-check {
-          cursor: pointer;
-          color: #27d64e;
-          margin-left: 10px;
-        }
       }
     }
 

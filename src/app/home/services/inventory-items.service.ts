@@ -29,7 +29,6 @@ export class InventoryItemsService {
                 collection_ref.orderBy('CreatedAt', 'desc').where('UserId', '==', user?.uid)
             ).valueChanges({ idField: 'ItemId' })
           } else {
-            alert('Refresh page, please try logging in 😀')
             return null;
           }
         })

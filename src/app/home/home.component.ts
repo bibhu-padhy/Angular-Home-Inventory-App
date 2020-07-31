@@ -6,12 +6,16 @@ import { AuthService } from '../auth/services/auth.service';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { ItemDetailsModalComponent } from './dialog-modal/item-details-modal/item-details-modal.component';
+import { AddItemsDialogComponent } from './dialog-modal/add-items-dialog/add-items-dialog.component';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
+
+
 export class HomeComponent {
   private UserId: string;
   inventoryItemsForm: FormGroup;
@@ -21,21 +25,13 @@ export class HomeComponent {
 
 
   constructor(
-    private fb: FormBuilder,
+
     private inventoryService: InventoryItemsService,
     public authService: AuthService,
     private dialog: MatDialog
 
   ) {
-    this.inventoryItemsForm = this.fb.group({
-      ItemName: ['', [Validators.required]],
-      ItemPrice: ['', [Validators.required]],
-      ItemQuantity: ['', [Validators.required]],
-      CreatedAt: new Date(),
-      UpdatedAt: null,
-      IsCompleted: false,
-      UserId: ''
-    });
+
   }
 
   get FC() {
@@ -59,16 +55,10 @@ export class HomeComponent {
     });
   }
 
-  async addItem(formValue: ItemsModal) {
-    if (this.inventoryItemsForm.valid) {
-      formValue.UserId = await this.authService.getUserId();
-      this.inventoryService.addItem(formValue)
-        .then((_) => {
-          this.inventoryItemsForm.reset();
-        });
-    } else {
-      console.log('invalid');
-    }
+  openItemForm() {
+    this.dialog.open(AddItemsDialogComponent);
   }
+
+
 
 }

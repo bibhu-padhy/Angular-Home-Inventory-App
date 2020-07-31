@@ -8,18 +8,22 @@ import { ReactiveFormsModule } from '@angular/forms'
 import { PascalCasingPipe } from 'src/app/common/pipes/pascal-casing.pipe'
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ItemDetailsModalComponent } from './dialog-modal/item-details-modal/item-details-modal.component';
+import { AddItemsDialogComponent } from './dialog-modal/add-items-dialog/add-items-dialog.component';
+import { MaterialModule } from '../app.material.module';
 @NgModule({
   declarations: [
     HomeComponent,
     InventoryItemComponent,
     PascalCasingPipe,
-    ItemDetailsModalComponent
+    ItemDetailsModalComponent,
+    AddItemsDialogComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule,
     ReactiveFormsModule,
-    DragDropModule
+    DragDropModule,
+    MaterialModule
   ]
 })
 export class HomeModule { }

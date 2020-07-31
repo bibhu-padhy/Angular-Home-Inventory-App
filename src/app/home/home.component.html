@@ -2,13 +2,22 @@
   <div class="home_container">
     <div class="navbar">
       <div class="add_items_container">
-        <button class="logout" (click)="authService.logout()">logout</button>
-        <form [formGroup]=inventoryItemsForm (ngSubmit)="addItem(inventoryItemsForm.value)">
-          <input type="text" formControlName="ItemName" class="form_control" placeholder="Apples..">
-          <input type="text" formControlName="ItemPrice" class="form_control quantity_input" placeholder="1Kg">
-          <input type="text" formControlName="ItemQuantity" class="form_control price_input " placeholder="100rs">
-          <i (click)="addItem(inventoryItemsForm.value)" class="fa fa-check fa-2x"></i>
-        </form>
+        <div>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button (click)="authService.logout()" mat-menu-item>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+        </div>
+        <button mat-icon-button>
+          <mat-icon (click)="openItemForm()" color="primary">add_box</mat-icon>
+        </button>
+        <button mat-icon-button>
+          <mat-icon color="warn">notification_important</mat-icon>
+        </button>
       </div>
     </div>
     <div class="inventory_item_container">
