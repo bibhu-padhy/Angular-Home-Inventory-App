@@ -7,6 +7,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth'
 import { firebaseConfig } from './utils/config'
 import { AngularFireDatabaseModule } from '@angular/fire/database'
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './app.material.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,11 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     AngularFirestoreModule,
+    BrowserAnimationsModule,
+    MaterialModule
   ],
+
+
   providers: [],
   bootstrap: [AppComponent]
 })

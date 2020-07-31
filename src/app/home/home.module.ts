@@ -7,11 +7,13 @@ import { InventoryItemComponent } from './inventory-item/inventory-item.componen
 import { ReactiveFormsModule } from '@angular/forms'
 import { PascalCasingPipe } from 'src/app/common/pipes/pascal-casing.pipe'
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ItemDetailsModalComponent } from './dialog-modal/item-details-modal/item-details-modal.component';
 @NgModule({
   declarations: [
     HomeComponent,
     InventoryItemComponent,
-    PascalCasingPipe
+    PascalCasingPipe,
+    ItemDetailsModalComponent
   ],
   imports: [
     CommonModule,

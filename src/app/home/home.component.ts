@@ -20,7 +20,8 @@ export class HomeComponent {
   constructor(
     private fb: FormBuilder,
     private inventoryService: InventoryItemsService,
-    public authService: AuthService
+    public authService: AuthService,
+
 
   ) {
     this.inventoryItemsForm = this.fb.group({
@@ -42,11 +43,15 @@ export class HomeComponent {
     if (item.isShowDetails) { // show details
       this.inventoryService.getItem(item.ItemId)
         .subscribe((res) => {
-          console.log(res);
+          console.log(res)
         })
     } else { // update
       this.inventoryService.updateItem(item.ItemId, { IsCompleted: !item.isCompleted })
     }
+  }
+
+  showDeatils() {
+
   }
 
   async addItem(formValue: ItemsModal) {
