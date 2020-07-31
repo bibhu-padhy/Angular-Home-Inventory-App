@@ -4,6 +4,8 @@ import { ItemsModal } from './modal/items.modal'
 import { InventoryItemsService } from './services/inventory-items.service'
 import { AuthService } from '../auth/services/auth.service';
 import { Observable } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { ItemDetailsModalComponent } from './dialog-modal/item-details-modal/item-details-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -14,14 +16,15 @@ export class HomeComponent {
   private UserId: string;
   inventoryItemsForm: FormGroup;
   loggedInUser: any;
-  inventoryItemsArray: Observable<ItemsModal[]> = this.inventoryService.getInventoryItems()
+
+  inventoryItemsArray: Observable<ItemsModal[]> = this.inventoryService.getInventoryItems();
 
 
   constructor(
     private fb: FormBuilder,
     private inventoryService: InventoryItemsService,
     public authService: AuthService,
-
+    private dialog: MatDialog
 
   ) {
     this.inventoryItemsForm = this.fb.group({
@@ -32,26 +35,28 @@ export class HomeComponent {
       UpdatedAt: null,
       IsCompleted: false,
       UserId: ''
-    })
+    });
   }
 
   get FC() {
-    return this.inventoryItemsForm.controls
+    return this.inventoryItemsForm.controls;
   }
 
   getSelectedItemId(item: { ItemId: string, isShowDetails: string, isCompleted: boolean }) {
     if (item.isShowDetails) { // show details
       this.inventoryService.getItem(item.ItemId)
         .subscribe((res) => {
-          console.log(res)
-        })
+          console.log(res);
+        });
     } else { // update
-      this.inventoryService.updateItem(item.ItemId, { IsCompleted: !item.isCompleted })
+      this.inventoryService.updateItem(item.ItemId, { IsCompleted: !item.isCompleted });
     }
   }
 
-  showDeatils() {
-
+  showDeatils(item: ItemsModal) {
+    this.dialog.open(ItemDetailsModalComponent, {
+      data: item
+    });
   }
 
   async addItem(formValue: ItemsModal) {
@@ -59,10 +64,10 @@ export class HomeComponent {
       formValue.UserId = await this.authService.getUserId();
       this.inventoryService.addItem(formValue)
         .then((_) => {
-          this.inventoryItemsForm.reset()
-        })
+          this.inventoryItemsForm.reset();
+        });
     } else {
-      console.log('invalid')
+      console.log('invalid');
     }
   }
 

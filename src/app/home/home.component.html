@@ -2,7 +2,7 @@
   <div class="home_container">
     <div class="navbar">
       <div class="add_items_container">
-        <button (click)="authService.logout()">logout</button>
+        <button class="logout" (click)="authService.logout()">logout</button>
         <form [formGroup]=inventoryItemsForm (ngSubmit)="addItem(inventoryItemsForm.value)">
           <input type="text" formControlName="ItemName" class="form_control" placeholder="Apples..">
           <input type="text" formControlName="ItemPrice" class="form_control quantity_input" placeholder="1Kg">
@@ -13,8 +13,8 @@
     </div>
     <div class="inventory_item_container">
       <div *ngIf="(inventoryItemsArray |async) as ItemsArray;else NoItem">
-        <app-inventory-item (selectedItemId)="getSelectedItemId($event)" *ngFor="let item of ItemsArray"
-          [InventtoryItem]=item>
+        <app-inventory-item (selectedItemId)="getSelectedItemId($event)" (click)="showDeatils(item)"
+          *ngFor="let item of ItemsArray" [InventtoryItem]=item>
         </app-inventory-item>
       </div>
       <ng-template #NoItem>
