@@ -1,9 +1,9 @@
 <div class="inventory_item" [class.IsComplede]="InventtoryItem.IsCompleted">
   <i class="fa fa-bars" aria-hidden="true"></i>
-  <span (click)="getItemDetails(InventtoryItem,true)" class="item_name">
+  <span (click)=" showDeatils(InventtoryItem)" class=" item_name">
     {{InventtoryItem.ItemName}}
   </span>
-  <div class="circel" (click)="getItemDetails(InventtoryItem,false)">
+  <div class="circel" (click)="makeItemCompleted(InventtoryItem)">
     <div class="inner_circel" [class.active]="InventtoryItem.IsCompleted"></div>
   </div>
 </div>

@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ItemsModal } from '../modal/items.modal';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
-import { database } from 'firebase';
-
+import Swal from 'sweetalert2'
 
 @Injectable({
   providedIn: 'root'
@@ -19,15 +18,21 @@ export class InventoryItemsService {
     private authService: AuthService
   ) { }
 
-  getInventoryItems(): Observable<any> {
+  getInCompleteInventoryItems(): Observable<any> {
     const items = this.authService.auth.authState
       .pipe(
         switchMap((user: firebase.User) => {
           if (user) {
             return this.db.collection('items_list',
               collection_ref =>
-                collection_ref.orderBy('CreatedAt', 'desc').where('UserId', '==', user?.uid)
+                collection_ref
+                  .orderBy('CreatedAt', 'desc')
+                  .where('UserId', '==', user?.uid)
+                  .where('IsCompleted', '==', false)
             ).valueChanges({ idField: 'ItemId' })
+              .pipe(
+                tap(d => console.log(d))
+              )
           } else {
             return null;
           }
@@ -59,8 +64,24 @@ export class InventoryItemsService {
     if (ItemId && Item) {
       this.db.doc(`items_list/${ItemId}`)
         .set(Item, { merge: true })
-    } else {
-      alert('some thing went wrong please reload');
+        .then((_) => {
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            onOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+
+          Toast.fire({
+            icon: 'success',
+            title: 'Item Has been added to the Inventory'
+          })
+        })
     }
 
   }

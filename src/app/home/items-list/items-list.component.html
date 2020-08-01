@@ -1,0 +1,13 @@
+<div class="inventory_item_container">
+  <div *ngIf="(inventoryItemsArray |async) as ItemsArray;">
+    <div *ngIf="ItemsArray.length > 0;else NoItem">
+      <app-item (UpdateItem)="UpdateItem($event)" *ngFor="let item of ItemsArray" [InventtoryItem]=item>
+      </app-item>
+    </div>
+  </div>
+  <ng-template #NoItem>
+    <div class="text-center">
+      No Items Avaiable 😃
+    </div>
+  </ng-template>
+</div>

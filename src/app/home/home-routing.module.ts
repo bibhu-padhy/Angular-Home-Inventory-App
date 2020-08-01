@@ -1,15 +1,29 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
-import { redirectUnauthorizedTo, AngularFireAuthGuard } from '@angular/fire/auth-guard';
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['auth/login']);
+import { ItemsListComponent } from './items-list/items-list.component';
+
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
-    canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin }
-  }
+    children: [
+      {
+        path: 'my-inventory',
+        loadChildren: () => import('src/app/my-inventory/my-inventory-routing.module').then(m => m.MyInventoryRoutingModule)
+      },
+      {
+        path: 'items-list',
+        component: ItemsListComponent
+      },
+      {
+        path: '',
+        redirectTo: 'items-list',
+        pathMatch: 'full'
+      }
+    ]
+  },
 ];
 
 @NgModule({

@@ -31,6 +31,7 @@ export class AddItemsDialogComponent {
     });
   }
 
+
   async addItem(formValue: ItemsModal) {
     if (this.inventoryItemsForm.valid) {
       formValue.UserId = await this.authService.getUserId();

@@ -1,34 +1,6 @@
 <div class="main">
   <div class="home_container">
-    <div class="navbar">
-      <div class="add_items_container">
-        <div>
-          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="menu">
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button (click)="authService.logout()" mat-menu-item>
-              <span>Logout</span>
-            </button>
-          </mat-menu>
-        </div>
-        <button mat-icon-button>
-          <mat-icon (click)="openItemForm()" color="primary">add_box</mat-icon>
-        </button>
-        <button mat-icon-button>
-          <mat-icon color="warn">notification_important</mat-icon>
-        </button>
-      </div>
-    </div>
-    <div class="inventory_item_container">
-      <div *ngIf="(inventoryItemsArray |async) as ItemsArray;else NoItem">
-        <app-inventory-item (selectedItemId)="getSelectedItemId($event)" (click)="showDeatils(item)"
-          *ngFor="let item of ItemsArray" [InventtoryItem]=item>
-        </app-inventory-item>
-      </div>
-      <ng-template #NoItem>
-        No Items Avaiable 😃
-      </ng-template>
-    </div>
+    <app-navbar></app-navbar>
+    <router-outlet></router-outlet>
   </div>
 </div>
