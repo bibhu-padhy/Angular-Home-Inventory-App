@@ -5,12 +5,13 @@ import { map, switchMap, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import Swal from 'sweetalert2'
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InventoryItemsService {
-  private readonly item_collection_ref = this.db.collection('items_list');
+  private readonly item_collection_ref = environment.production ? this.db.collection('items_list') : this.db.collection('items_list_dev');
   loggedInUser: firebase.User;
 
   constructor(
@@ -76,13 +77,11 @@ export class InventoryItemsService {
               toast.addEventListener('mouseleave', Swal.resumeTimer)
             }
           })
-
           Toast.fire({
             icon: 'success',
             title: 'Item Has been added to the Inventory'
           })
         })
     }
-
   }
 }
