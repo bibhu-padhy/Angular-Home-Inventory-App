@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { ItemsListComponent } from './items-list/items-list.component';
-
+import { MyInventoryComponent } from './my-inventory/my-inventory.component'
 
 const routes: Routes = [
   {
@@ -10,12 +10,12 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {
-        path: 'my-inventory',
-        loadChildren: () => import('src/app/my-inventory/my-inventory-routing.module').then(m => m.MyInventoryRoutingModule)
-      },
-      {
         path: 'items-list',
         component: ItemsListComponent
+      },
+      {
+        path: 'my-inventory',
+        component: MyInventoryComponent
       },
       {
         path: '',

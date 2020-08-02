@@ -9,7 +9,6 @@ import { AngularFireDatabaseModule } from '@angular/fire/database'
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './app.material.module';
-import { NavbarComponent } from './app-components/navbar/navbar.component';
 
 @NgModule({
   declarations: [

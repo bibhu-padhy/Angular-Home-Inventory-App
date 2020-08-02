@@ -15,7 +15,6 @@ const routes: Routes = [
     loadChildren: () => import('src/app/home/home.module').then(m => m.HomeModule),
     canActivate: [AngularFireAuthGuard], data: { authGuardPipe: redirectUnauthorizedToLogin },
   },
-
   {
     path: '',
     redirectTo: 'auth',

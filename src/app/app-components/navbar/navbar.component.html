@@ -4,15 +4,22 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <button routerLink="/home/my-inventory" mat-menu-item>
+        <span>
+          <mat-icon>kitchen</mat-icon> My Inventory
+        </span>
+      </button>
       <button (click)="authService.logout()" mat-menu-item>
-        <span>Logout</span>
+        <span>
+          <mat-icon>exit_to_app</mat-icon> Logout
+        </span>
       </button>
     </mat-menu>
   </div>
   <button mat-icon-button>
     <mat-icon (click)="openItemForm()" color="primary">add_box</mat-icon>
   </button>
-  <button routerLink="/home/my-inventory" mat-icon-button>
+  <button routerLink="/home/items-list" mat-icon-button>
     <mat-icon color="warn">notification_important</mat-icon>
   </button>
 </div>

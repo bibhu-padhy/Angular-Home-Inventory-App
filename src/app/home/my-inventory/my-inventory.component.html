@@ -1,0 +1,13 @@
+<div class="item_card_container">
+  <div *ngIf="(items$ | async) as items">
+    <div *ngIf="items.length > 0; else noItem">
+      <app-item-card *ngFor="let item of items" [Item]=item></app-item-card>
+    </div>
+  </div>
+  <ng-template #noItem>
+    <div style="text-align: center;width: 100%;">
+      No item
+    </div>
+  </ng-template>
+
+</div>

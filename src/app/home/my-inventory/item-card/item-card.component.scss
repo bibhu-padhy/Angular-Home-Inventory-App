@@ -1,0 +1,23 @@
+.item_card {
+  width: 200px;
+  height: 150px;
+  border: 1px solid #77ff95;
+  margin: 10px;
+  .item_card_header {
+    display: flex;
+    justify-content: space-between;
+    .edit {
+      color: #c4c4c4;
+    }
+    .delete {
+      color: #ff8c8c !important;
+    }
+  }
+  .item_card_body {
+    width: 100%;
+    padding: 0 10px;
+    h4 {
+      font-weight: 600;
+    }
+  }
+}

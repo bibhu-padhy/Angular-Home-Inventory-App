@@ -1,0 +1,16 @@
+<div class="item_card">
+  <div class="item_card_header">
+    <button (click)="edit(Item)" mat-icon-button>
+      <mat-icon class="edit">create</mat-icon>
+    </button>
+    <button (click)="delete(Item)" mat-icon-button>
+      <mat-icon class="delete">delete_outline</mat-icon>
+    </button>
+
+  </div>
+  <div class="item_card_body">
+    <h4>{{Item?.ItemName}}</h4>
+    <h4>{{Item?.ItemQuantity}}</h4>
+    <h4>{{Item?.ItemPrice}}</h4>
+  </div>
+</div>

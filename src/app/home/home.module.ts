@@ -12,6 +12,10 @@ import { MaterialModule } from '../app.material.module';
 import { ItemsListComponent } from './items-list/items-list.component';
 import { NavbarComponent } from '../app-components/navbar/navbar.component';
 import { ItemComponent } from './items-list/item/item.component';
+import { MyInventoryComponent } from './my-inventory/my-inventory.component';
+import { ItemCardComponent } from './my-inventory/item-card/item-card.component';
+import { UpdateItemComponent } from './dialog-modal/update-item/update-item.component';
+
 @NgModule({
   declarations: [
     HomeComponent,
@@ -20,7 +24,10 @@ import { ItemComponent } from './items-list/item/item.component';
     AddItemsDialogComponent,
     ItemsListComponent,
     NavbarComponent,
-    ItemComponent
+    ItemComponent,
+    MyInventoryComponent,
+    ItemCardComponent,
+    UpdateItemComponent
   ],
   imports: [
     CommonModule,

@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class InventoryItemsService {
-  private readonly item_collection_ref = environment.production ? this.db.collection('items_list') : this.db.collection('items_list_dev');
+  private readonly collectionName = environment.production ? 'items_list' : 'items_list_dev';
   loggedInUser: firebase.User;
 
   constructor(
@@ -24,12 +24,36 @@ export class InventoryItemsService {
       .pipe(
         switchMap((user: firebase.User) => {
           if (user) {
-            return this.db.collection('items_list',
+            return this.db.collection(this.collectionName,
               collection_ref =>
                 collection_ref
                   .orderBy('CreatedAt', 'desc')
                   .where('UserId', '==', user?.uid)
                   .where('IsCompleted', '==', false)
+            ).valueChanges({ idField: 'ItemId' })
+              .pipe(
+                tap(d => console.log(d))
+              )
+          } else {
+            return null;
+          }
+        })
+      )
+    return items;
+  }
+
+
+  getCompletedInventoryItems(): Observable<any> {
+    const items = this.authService.auth.authState
+      .pipe(
+        switchMap((user: firebase.User) => {
+          if (user) {
+            return this.db.collection(this.collectionName,
+              collection_ref =>
+                collection_ref
+                  .orderBy('CreatedAt', 'desc')
+                  .where('UserId', '==', user?.uid)
+                  .where('IsCompleted', '==', true)
             ).valueChanges({ idField: 'ItemId' })
               .pipe(
                 tap(d => console.log(d))
@@ -57,25 +81,20 @@ export class InventoryItemsService {
   }
 
   async addItem(item: ItemsModal) {
-    const addedItem = await this.item_collection_ref.add(item);
+    const addedItem = await this.db.collection(this.collectionName).add(item);
     return addedItem.id;
   }
 
   updateItem(ItemId, Item: any) {
     if (ItemId && Item) {
-      this.db.doc(`items_list/${ItemId}`)
+      this.db.doc(`${this.collectionName}/${ItemId}`)
         .set(Item, { merge: true })
         .then((_) => {
           const Toast = Swal.mixin({
             toast: true,
             position: 'top',
             showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            onOpen: (toast) => {
-              toast.addEventListener('mouseenter', Swal.stopTimer)
-              toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
+            timer: 2000,
           })
           Toast.fire({
             icon: 'success',
@@ -83,5 +102,22 @@ export class InventoryItemsService {
           })
         })
     }
+  }
+
+  deleteItem(ItemId: string) {
+    this.db.doc(`${this.collectionName}/${ItemId}`)
+      .delete()
+      .then((_) => {
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top',
+          showConfirmButton: false,
+          timer: 2000,
+        })
+        Toast.fire({
+          icon: 'success',
+          title: 'Item Has been removed successfully'
+        })
+      })
   }
 }
