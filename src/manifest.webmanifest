@@ -1,8 +1,8 @@
 {
-  "name": "front-end",
-  "short_name": "front-end",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "My Inventory",
+  "short_name": "My Inventory",
+  "theme_color": "#77FF95",
+  "background_color": "#FFB8B8",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
