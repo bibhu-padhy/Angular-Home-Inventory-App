@@ -1,0 +1,13 @@
+<div class="inventory_item">
+  <button class="bars_icon" mat-icon-button>
+    <mat-icon>reorder</mat-icon>
+  </button>
+
+  <span class="item_name">
+    {{Item?.ItemName}}
+  </span>
+
+  <button (click)="makeItemCompleted(Item)" class="done_icon" mat-icon-button>
+    <mat-icon>done_outline</mat-icon>
+  </button>
+</div>

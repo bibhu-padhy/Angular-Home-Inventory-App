@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "sics-8461b": {
+      "hosting": {
+        "inventory-app": [
+          "sics-8461b"
+        ]
+      }
+    }
+  }
+}

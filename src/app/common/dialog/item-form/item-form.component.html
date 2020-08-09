@@ -1,0 +1,23 @@
+<form [formGroup]=inventoryItemsForm (ngSubmit)="closeModal(inventoryItemsForm.value)">
+  <p>
+    <mat-form-field>
+      <input formControlName="ItemName" matInput placeholder="Item Name">
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field>
+      <input formControlName="ItemQuantity" matInput placeholder="Quantity">
+    </mat-form-field>
+  </p>
+
+  <p>
+    <mat-form-field>
+      <input formControlName="ItemPrice" matInput placeholder="Price">
+    </mat-form-field>
+  </p>
+
+  <button type="submit" mat-stroked-button color="primary">
+    {{data?.buttonName}}
+  </button>
+</form>

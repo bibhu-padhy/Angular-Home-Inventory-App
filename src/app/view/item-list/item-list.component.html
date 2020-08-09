@@ -1,0 +1,7 @@
+<div *ngIf="($items | async) as items;else noItem ">
+  <app-item *ngFor="let item of items" [Item]=item></app-item>
+</div>
+
+<ng-template #noItem>
+  No Item
+</ng-template>

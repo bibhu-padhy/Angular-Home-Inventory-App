@@ -1,0 +1,23 @@
+@import "../../../styles.scss";
+
+.navbar_container {
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 20px;
+  .left_container {
+    span {
+      cursor: pointer;
+      font-size: 18px;
+      margin: 0 5px;
+      &.active {
+        border-bottom: 2px solid $Yle_Blue;
+      }
+    }
+  }
+  .right_container {
+    display: flex;
+    align-items: center;
+  }
+}

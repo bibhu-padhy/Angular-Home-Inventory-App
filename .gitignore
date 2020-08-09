@@ -1,6 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
+
+/src/app/utils/config.ts
+
 /dist
 /tmp
 /out-tsc

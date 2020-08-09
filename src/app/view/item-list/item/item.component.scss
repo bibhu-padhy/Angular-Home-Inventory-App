@@ -1,0 +1,29 @@
+@import "../../../../styles.scss";
+
+.inventory_item {
+  height: 50px;
+  width: 300px;
+  margin: auto;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  background-color: $Green_Crayola;
+
+  .bars_icon {
+    mat-icon {
+      color: $Alce_Blue !important;
+    }
+  }
+
+  .item_name {
+    flex: 1;
+    cursor: pointer;
+    font-size: larger;
+  }
+
+  .done_icon {
+    mat-icon {
+      color: $Atomic_Tangerine !important;
+    }
+  }
+}
